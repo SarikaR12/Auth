@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useRef } from 'react'
+import { getAllData, saveItem } from './firebase/functions';
 
-function App() {
+const App = () => {
+
+  let productName = useRef();
+  let price = useRef();
+
+  let addItem = async () => {
+    let product = {
+      productName: productName.current.value,
+      price: price.current.value,
+    };
+
+    let res = await saveItem(product);
+    console.log(res);
+  };
+
+
+  
+  useEffect(() => {
+    getAllData();
+  });
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input type="text" ref={productName} />
+      <input type="text" ref={price} />
+      <button onClick={addItem}>Submit</button>
     </div>
-  );
+
+  )
 }
 
 export default App;
