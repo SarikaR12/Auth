@@ -1,22 +1,19 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getSelectionRange } from "@testing-library/user-event/dist/utils";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyA2aJwCY5nMv5fmWiT8tKZkn876wAnH4KI",
-  authDomain: "react-9-bd5ec.firebaseapp.com",
-  projectId: "react-9-bd5ec",
-  storageBucket: "react-9-bd5ec.appspot.com",
-  messagingSenderId: "101629019760",
-  appId: "1:101629019760:web:84a4972f6e75e4b90056b5",
-  measurementId: "G-746Y185G8S",
+    apiKey: "AIzaSyAZ1v3OWQwC_jrryUdQzRa-8Ruec1WY_t0",
+    authDomain: "login-8dd8a.firebaseapp.com",
+    projectId: "login-8dd8a",
+    storageBucket: "login-8dd8a.appspot.com",
+    messagingSenderId: "883466658417",
+    appId: "1:883466658417:web:a7ab872e951d790f4e71d0"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-const firestore = getFirestore(app);
-const storage = getSelectionRange(app);
-
-export { firestore, storage };
+export { auth, provider, signInWithPopup, signOut };

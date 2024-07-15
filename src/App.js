@@ -1,36 +1,37 @@
-import React, { useEffect, useRef } from 'react'
-import { getAllData, saveItem } from './firebase/functions';
+// src/App.js
+import React, { useState, useEffect } from 'react';
+import Logout from './component/logout';
+import Login from './component/login';
+import { auth } from './component/firebase';
+
 
 const App = () => {
+  const [user, setUser] = useState(null);
 
-  let productName = useRef();
-  let price = useRef();
-
-  let addItem = async () => {
-    let product = {
-      productName: productName.current.value,
-      price: price.current.value,
-    };
-
-    let res = await saveItem(product);
-    console.log(res);
-  };
-
-
-  
   useEffect(() => {
-    getAllData();
-  });
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
 
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div>
-      <input type="text" ref={productName} />
-      <input type="text" ref={price} />
-      <button onClick={addItem}>Submit</button>
+      {user ? (
+        <div>
+          <h1>Welcome, {user.displayName}</h1>
+          <Logout />
+        </div>
+      ) : (
+        <Login />
+      )}
     </div>
-
-  )
-}
+  );
+};
 
 export default App;
